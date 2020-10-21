@@ -20,8 +20,3 @@ export const renameList = (id: string, title: string) => ({
     type: listsTypes.RENAME_LIST,
     payload: {id, title}
 })
-
-export const moveList = (listId: string) => ({
-    type: listsTypes.RENAME_LIST,
-    payload: {listId}
-})

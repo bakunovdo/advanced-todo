@@ -61,7 +61,12 @@ export const TodoListPage: React.FC<Props> = (props) => {
             <AppDrawerContainer/>
             <AppContent>
                 <STodoMain>
-                    <TodoListHeader listId={list?.id} listTitle={listTitle} deleteList={props.deleteList}/>
+                    <TodoListHeader
+                        listId={list?.id}
+                        listTitle={listTitle}
+                        deleteList={props.deleteList}
+                        renameList={props.renameList}
+                    />
                     <Divider/>
                     <TodoForm addTodo={addTodo}/>
                     <STodoList>

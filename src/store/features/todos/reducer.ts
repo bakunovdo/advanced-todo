@@ -116,13 +116,21 @@ export const todosReducer = (state = initialState, action: todosActionTypes) => 
                 selectedTodo: newSelTodo
             }
         }
+
         case todoTypes.MOVE_TODO: {
+            // @ts-ignore
+            const {listId, todoId} = action.payload
             const [...todos] = state.items
-            console.log(action.payload)
+
             const newTodos = todos.map((todo) => {
+                if (todo.id === todoId) {
+                    todo.listId = listId
+                }
+                return todo
             })
             return {
-                ...state
+                ...state,
+                items: newTodos
             }
         }
 

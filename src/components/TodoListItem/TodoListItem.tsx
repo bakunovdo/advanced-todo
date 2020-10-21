@@ -2,13 +2,13 @@ import React from 'react';
 
 import {
     DeleteOutlined,
-    EditOutlined,
+    EditOutlined, ExclamationCircleOutlined,
     HomeOutlined,
     RightCircleOutlined,
     StarOutlined,
     StarTwoTone
 } from "@ant-design/icons/lib";
-import {Button, Checkbox, Dropdown, List, Menu, Popconfirm, Typography} from 'antd';
+import {Modal, Button, Checkbox, Dropdown, List, Menu, message, Popconfirm, Typography} from 'antd';
 
 import {StarButton, TodoListItemStyled} from "./styled";
 
@@ -19,7 +19,7 @@ import SubMenu from "antd/es/menu/SubMenu";
 
 type IProps = {
     todo: TTodo,
-    moveTodo: (listId: string, todoId: string) => void
+    moveTodo: (listId: string, todoId: string) => boolean
     deleteTodo: () => void,
     toggleTodo: () => void,
     toggleImportant: () => void,
@@ -60,27 +60,56 @@ export const TodoListItem: React.FC<IProps> = React.memo((props) => {
         todoInfo.push(<MiniNote/>)
     }
 
+    const moveTodoHandler = async (todoId: string, listId: string) => {
+        const res = moveTodo(todoId, listId)
+        if (res) {
+            message.success("Todo moved success")
+        } else message.error("Todo moved fail")
+    }
+
+    function showConfirmDelete() {
+        Modal.confirm({
+            title: 'Do you want delete todo?',
+            icon: <ExclamationCircleOutlined />,
+            content: '',
+            onOk() {
+                deleteTodo()
+            },
+            onCancel() {
+
+            },
+        });
+    }
+
     const ContextMenu = (
         <Menu>
-            <Menu.Item key={`Rename ${todo.id}`} icon={<EditOutlined/>}>
-                Rename
-            </Menu.Item>
-
+            {/*<Menu.Item key={`Rename ${todo.id}`} icon={<EditOutlined/>}>*/}
+            {/*    Rename*/}
+            {/*</Menu.Item>*/}
             <SubMenu icon={<RightCircleOutlined/>} title="Move to list">
-                <Menu.Item key={`Home ${todo.id}`} icon={<HomeOutlined/>}>
+                <Menu.Item key={`Home ${todo.id}`}
+                           icon={<HomeOutlined/>}
+                           disabled={todo.listId === ""}
+                           onClick={() => moveTodoHandler(todo.id, "")}
+                >
                     Home
                 </Menu.Item>
                 <Menu.Divider/>
                 {lists.map((list) => (
                     <Menu.Item key={`${list.id} ${todo.id}`}
-                               onClick={() => moveTodo(todo.id, list.id)}>
+                               onClick={() => moveTodoHandler(todo.id, list.id)}
+                               disabled={todo.listId === list.id}
+                    >
                         {list.title}
                     </Menu.Item>
                 ))}
             </SubMenu>
 
             <Menu.Divider/>
-            <Menu.Item key={`Delete ${todo.id}`} icon={<DeleteOutlined/>} danger>
+            <Menu.Item key={`Delete ${todo.id}`}
+                       onClick={showConfirmDelete}
+                       icon={<DeleteOutlined/>}
+                       danger>
                 Delete task
             </Menu.Item>
         </Menu>

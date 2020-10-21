@@ -53,10 +53,6 @@
   flex: 1px;
 }
 
-.anticon + span {
-  width: 100%;
-  position: relative;
-}
 .ant-menu-item-active {
   .deleteIcon, .editIcon {
     opacity: 1!important;

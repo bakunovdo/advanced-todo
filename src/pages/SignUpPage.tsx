@@ -1,17 +1,23 @@
 import React from 'react';
-import {Button, Col, Form, Input, Row, Typography} from "antd";
+import {Alert, Button, Col, Form, Input, Row, Typography} from "antd";
 
 import {ConnectedProps} from "react-redux";
 import {connectorSignUpPage} from "../containers/SignUpPageContainer";
-import {NavLink} from "react-router-dom";
+import {NavLink, Redirect} from "react-router-dom";
 
-type Props = ConnectedProps<typeof connectorSignUpPage>
+type Props = ConnectedProps<typeof connectorSignUpPage> & {isAuth: boolean | null}
 
 export const SignUpPage: React.FC<Props> = (props) => {
+    const [errorMessage, setErrorMessage] = React.useState("")
 
-    const onFinish = (values: any) => {
-        props.signup(values.email, values.password)
+    const onFinish = async (values: any) => {
+        const response = await props.signup(values.email, values.password)
+        if (response && response.message) {
+            setErrorMessage(response.message)
+        }
     }
+
+    if (props.isAuth) return <Redirect to="/"/>
 
     return (
         <React.Fragment>
@@ -40,7 +46,7 @@ export const SignUpPage: React.FC<Props> = (props) => {
                                     required: true,
                                     message: 'Invalid email!'
                                 }
-                                    ]}
+                            ]}
                         >
                             <Input placeholder="Email"/>
                         </Form.Item>
@@ -51,11 +57,14 @@ export const SignUpPage: React.FC<Props> = (props) => {
                                 {required: true, message: 'Please input your password!',},
                                 {min: 8, message: "Password length less then 8!"},
                                 {pattern: /^\S*$/, message: "Password have whitespace!"},
-                                {pattern: /^(?=.*\d)(?=.*[a-zA-Z]).+$/, message: "Password should contain letters and digits"},
+                                {
+                                    pattern: /^(?=.*\d)(?=.*[a-zA-Z]).+$/,
+                                    message: "Password should contain letters and digits"
+                                },
                             ]}
                             hasFeedback
                         >
-                            <Input.Password placeholder="Password" />
+                            <Input.Password placeholder="Password" autoComplete={"new-password"}/>
                         </Form.Item>
 
                         <Form.Item
@@ -67,7 +76,7 @@ export const SignUpPage: React.FC<Props> = (props) => {
                                     required: true,
                                     message: 'Please confirm your password!',
                                 },
-                                ({ getFieldValue }) => ({
+                                ({getFieldValue}) => ({
                                     validator(rule, value) {
                                         if (!value || getFieldValue('password') === value) {
                                             return Promise.resolve();
@@ -77,8 +86,17 @@ export const SignUpPage: React.FC<Props> = (props) => {
                                 }),
                             ]}
                         >
-                            <Input.Password placeholder="Confirm Password" />
+                            <Input.Password placeholder="Confirm Password"/>
                         </Form.Item>
+
+                        {
+                            errorMessage && (
+                                <Form.Item>
+                                    <Alert message={errorMessage} type="error"/>
+                                </Form.Item>
+                            )
+                        }
+
                         <Form.Item style={{textAlign: "center"}}>
                             <Button type="primary" htmlType="submit" className="login-form-button">
                                 <span style={{letterSpacing: "1px"}}>CREATE ACCOUNT</span>

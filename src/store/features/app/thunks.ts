@@ -21,9 +21,9 @@ export const loginUserEmailAndPassword: any = (email: string, password: string) 
 
 export const signInWithUserEmailAndPassword: any = (email: string, password: string) => {
     return () => {
-        return api.signin(email, password).then(() => {
-            return true
-        })
+        return api.signin(email, password).then(response => {
+            console.log(response)
+        }).catch((e) => e)
     }
 }
 

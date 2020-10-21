@@ -2,13 +2,13 @@ import {connect} from 'react-redux';
 
 import {
     addTodoRequest,
-    deleteTodoRequest, moveTodoRequest,
+    deleteTodoRequest,
+    moveTodoRequest,
     toggleImportantRequest,
     toggleTodoRequest
 } from "store/features/todos/thunks";
 
-import {deleteListRequest} from "store/features/lists/thunks";
-
+import {deleteListRequest, renameListRequest} from "store/features/lists/thunks";
 
 import {TodoListPage} from "pages/TodoListPage";
 
@@ -34,12 +34,13 @@ const mapStateToProps = (state: TMapState) => ({
 });
 
 const mapDispatchProps = {
-    moveTodo: moveTodoRequest,
+    renameList: renameListRequest,
     deleteList: deleteListRequest,
-    addTodo: addTodoRequest,
+    toggleImportant: toggleImportantRequest,
     deleteTodo: deleteTodoRequest,
     toggleTodo: toggleTodoRequest,
-    toggleImportant: toggleImportantRequest,
+    moveTodo: moveTodoRequest,
+    addTodo: addTodoRequest,
     selectTodo: selectTodo,
 };
 

@@ -4,6 +4,12 @@ import styled from "styled-components";
 export const AppDrawerStyled = styled.div`
   display:flex;
   flex-direction: column;
+  
+  
+  .anticon + span {
+    width: 100%;
+    position: relative;
+  }
  
   .baseStyles {
     margin: 15px 22px 0;

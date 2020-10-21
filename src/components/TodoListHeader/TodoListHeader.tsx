@@ -1,44 +1,20 @@
-import React from 'react';
-import styled from "styled-components";
+import React, {useState} from 'react';
 
-import {Popconfirm, Typography} from "antd";
-import {DeleteOutlined, EditOutlined} from "@ant-design/icons/lib";
-
-const SListTitle = styled.div`
-  width: 100%;
-  padding-left: 30px;
-  h1 {
-    margin-bottom: 0;
-  }
-`
-
-const ListActions = styled.div`
-  display:flex;
-  cursor: pointer;
-  right: 0;
-  color: #a5a5a5;
-  font-size: 18px;
-  
-  & > span {
-    margin-right: 20px;
-  }
-`
-
-const STodoListHeader = styled.div`
-  display:flex;
-  align-items: center;
-  justify-content: space-between;
-  
-`
+import {Input, message, Popconfirm, Typography} from "antd";
+import {CloseCircleOutlined, DeleteOutlined, EditOutlined} from "@ant-design/icons/lib";
+import {ListActions, SListTitle, STodoListHeader} from "./styled";
 
 type Props = {
     listId: string | undefined,
     listTitle: string,
     deleteList: (listId: string) => void
+    renameList: (listId: string, title: string) => boolean
 }
 
 
-export const TodoListHeader: React.FC<Props> = ({listId, listTitle, deleteList}) => {
+export const TodoListHeader: React.FC<Props> = ({listId, listTitle, deleteList, renameList}) => {
+    const [newListValue, setListValue] = useState(listTitle || "")
+    const [editMode, setEditMode] = useState(false)
 
     const deleteListHandler = () => {
         if (listId) {
@@ -47,17 +23,54 @@ export const TodoListHeader: React.FC<Props> = ({listId, listTitle, deleteList})
 
     }
 
+    const onEnableEditMode = () => {
+        setListValue(listTitle || "")
+        setEditMode(true)
+    }
+
+    const confirmTitle = async () => {
+        if (listTitle !== newListValue && newListValue && listId) {
+            const res = await renameList(listId, newListValue)
+            if(!res) message.error("Rename list fail")
+        }
+
+        setEditMode(false)
+    }
+
     return (
         <STodoListHeader>
             <SListTitle>
-                <Typography.Title>
-                    {listTitle}
-                </Typography.Title>
+                {
+                    editMode
+                        ? (
+                            <div>
+                                <Input
+                                    placeholder={"Your list title"}
+                                    value={newListValue}
+                                    onChange={(e) => setListValue(e.target.value)}
+                                    onPressEnter={confirmTitle}
+                                    onBlur={confirmTitle}
+                                    autoFocus
+                                />
+                            </div>
+                        )
+
+                        : (
+                            <Typography.Title>
+                                {listTitle}
+                            </Typography.Title>
+                        )
+                }
             </SListTitle>
+
             {
                 listId && (
                     <ListActions>
-                        <EditOutlined className={"editIcon"}/>
+                        {
+                            editMode
+                                ? <CloseCircleOutlined className={"editIcon"}/>
+                                : <EditOutlined className={"editIcon"} onClick={onEnableEditMode}/>
+                        }
                         <Popconfirm
                             placement="right"
                             title="Are you sure？"

@@ -20,6 +20,14 @@ export const SHeader = styled.div`
 
 export const SRightSide = styled.div`
   margin-right: 30px;
+  display:flex;
+  align-items: center;
+  
+  .user-email {
+    margin-right: 15px;
+    color: white;
+    font-weight: 500;
+  }
   
   .anticon-logout {
     color: #0078d7;
