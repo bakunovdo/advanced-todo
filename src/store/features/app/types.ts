@@ -28,6 +28,6 @@ interface logoutAction {
 
 
 export type appActionTypes =
-    | setUserAction
-    | logoutAction
-    | setAppInitializedAction
+    & setUserAction
+    & logoutAction
+    & setAppInitializedAction
