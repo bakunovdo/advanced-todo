@@ -1,0 +1,86 @@
+@import '../../../node_modules/antd/dist/antd.css';
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app {
+  display: flex;
+  flex: 1;
+}
+
+.ant-menu-item::after {
+  content: none!important;
+}
+
+.scrollable {
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  /* width */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: #dedede;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #8d8d8d;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #6d6d6d;
+  }
+}
+
+.divider {
+  height: 1px;
+  margin: 1px 0;
+  padding: 0;
+  overflow: hidden;
+  line-height: 0;
+  background-color: #f0f0f0;
+}
+
+.drawer-allLists {
+  flex: 1px;
+}
+
+.anticon + span {
+  width: 100%;
+  position: relative;
+}
+.ant-menu-item-active {
+  .deleteIcon, .editIcon {
+    opacity: 1!important;
+    :hover {
+      color: #1890ff;
+    }
+  }
+}
+
+.ant-tooltip-inner {
+  color: #2b2b2b;
+  font-size: 12px;
+}
+
+.ant-form {
+    width: 100%;
+    padding: 20px 0;
+
+    button {
+      margin-right: 10px;
+    }
+}
+
+.ant-list-item-action {
+  display: flex;
+  align-items: center;
+}
