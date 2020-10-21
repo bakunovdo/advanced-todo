@@ -30,9 +30,9 @@ export function deleteTodo(todoId: string): Promise<string> {
         .then(() => todoId)
 }
 
-export function updateTodo(todoId: string, todo: Partial<TTodo>): Promise<string | TFromUpdateTodo> {
+export function updateTodo(todoId: string, data: Partial<TTodo>): Promise<string | TFromUpdateTodo> {
     return firestore.collection("todos").doc(todoId)
-        .set(todo, {merge: true})
+        .set(data, {merge: true})
         .then(() => todoId)
         .catch(onError);
 }

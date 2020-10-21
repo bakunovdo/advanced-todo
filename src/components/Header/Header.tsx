@@ -26,6 +26,7 @@ export const Header: React.FC<Props & CProps> = (props) => {
             <NavLink to="/"> To Do </NavLink>
             {props.isAuth && (
                 <SRightSide>
+                    <span className="user-email">{props.user?.email}</span>
                     <LogoutOutlined onClick={logOutHandler}/>
                 </SRightSide>
             )}

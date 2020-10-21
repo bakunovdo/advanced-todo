@@ -4,10 +4,12 @@ import {TTodo} from "types";
 import {
     addStep,
     addTodo,
-    deleteTodo, moveTodo,
+    deleteTodo,
+    moveTodo,
     setTodos,
     toggleImportant,
-    toggleTodo, updateSteps,
+    toggleTodo,
+    updateSteps,
     updateTodo
 } from "./actions";
 
@@ -62,14 +64,13 @@ export const updateTodoRequest: any = (todoId: string, data: Partial<TTodo>) => 
 }
 
 export const moveTodoRequest: any = (todoId: string, listId: string) => {
-    console.log("in thunks")
     return (dispatch: any) => {
-        // api.updateTodo(todoId).then(() => {
+        return api.updateTodo(todoId, {listId}).then(() => {
             dispatch(moveTodo(todoId, listId))
-        // })
+            return true
+        })
     }
 }
-
 
 export const addStepRequest = (todo: TTodo, title: string) => {
     const newStep = {id: Date.now(), completed: false, title}

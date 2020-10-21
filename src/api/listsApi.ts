@@ -1,8 +1,8 @@
 import {firestore} from "../database";
 
 import {mapDoc, mapSnapshot, onError} from "./helpers";
-import {TFromApi} from "./types";
-import {TList} from "../types";
+import {TFromApi, TFromUpdateTodo} from "./types";
+import {TList, TTodo} from "../types";
 
 
 export function getLists(userId: string): Promise<TFromApi> {
@@ -30,4 +30,11 @@ export async function deleteList(listId: string) {
         .get().then((snap => Promise.all(snap.docs.map(doc => doc.ref.delete()))))
 
     await firestore.collection("lists").doc(listId).delete()
+}
+
+export function updateList(listId: string, data: Partial<TList>): Promise<boolean> {
+    return firestore.collection("lists").doc(listId)
+        .set(data, {merge: true})
+        .then(() => true)
+        .catch(() => false);
 }

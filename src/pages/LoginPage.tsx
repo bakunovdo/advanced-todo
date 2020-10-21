@@ -15,7 +15,7 @@ type TProps = { isAuth: boolean | null }
 
 export const LoginPage: React.FC<TProps> = (props) => {
     const onFinish = async (values: any) => {
-        props.authUser(values.email, values.password)
+        const result = await props.authUser(values.email, values.password)
     };
 
     if (props.isAuth) return <Redirect to="/"/>
@@ -56,12 +56,6 @@ export const LoginPage: React.FC<TProps> = (props) => {
                                 autoComplete="true"
                             />
                         </Form.Item>
-                        <Form.Item style={{textAlign: "right"}}>
-                            <NavLink to={"/signup"}>
-                                Forgot password
-                            </NavLink>
-                        </Form.Item>
-
                         <Form.Item style={{textAlign: "center"}}>
                             <Button type="primary" htmlType="submit" className="login-form-button">
                                 Log in

@@ -25,7 +25,7 @@ export type Props = ConnectedProps<typeof connectorAppDrawer> & RouteComponentPr
 const topMenu = [
     {title: "Home", to: "/", icon: <HomeOutlined/>},
     {title: "Important", to: "/important", icon: <StarOutlined/>},
-    {title: "Planned", to: "/planned", icon: <CalendarOutlined/>}
+    // {title: "Planned", to: "/planned", icon: <CalendarOutlined/>}
 ]
 
 export const AppDrawer: React.FC<Props> = (props) => {
