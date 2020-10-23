@@ -7,19 +7,18 @@ import {connectorHeader} from "containers/HeaderContainer";
 import {SHeader, SRightSide} from "./styled";
 import {LogoutOutlined} from "@ant-design/icons/lib";
 
-
 export type CProps = ConnectedProps<typeof connectorHeader>
 
 type Props = {
     isAuth: boolean | null
 }
 
+
 export const Header: React.FC<Props & CProps> = (props) => {
     const logOutHandler = () => {
         props.signOut()
         return <Redirect to="/login" push/>
     }
-
 
     return (
         <SHeader>

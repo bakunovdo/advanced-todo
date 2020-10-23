@@ -2,13 +2,13 @@ import React from 'react';
 
 import {
     DeleteOutlined,
-    EditOutlined, ExclamationCircleOutlined,
+    ExclamationCircleOutlined,
     HomeOutlined,
     RightCircleOutlined,
     StarOutlined,
     StarTwoTone
 } from "@ant-design/icons/lib";
-import {Modal, Button, Checkbox, Dropdown, List, Menu, message, Popconfirm, Typography} from 'antd';
+import {Button, Checkbox, Dropdown, List, Menu, message, Modal, Popconfirm, Typography} from 'antd';
 
 import {StarButton, TodoListItemStyled} from "./styled";
 
@@ -70,7 +70,7 @@ export const TodoListItem: React.FC<IProps> = React.memo((props) => {
     function showConfirmDelete() {
         Modal.confirm({
             title: 'Do you want delete todo?',
-            icon: <ExclamationCircleOutlined />,
+            icon: <ExclamationCircleOutlined/>,
             content: '',
             onOk() {
                 deleteTodo()

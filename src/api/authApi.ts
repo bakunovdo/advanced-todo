@@ -9,7 +9,6 @@ export function signin(email: string, password: string) {
     return firebaseAuth.createUserWithEmailAndPassword(email, password)
 }
 
-
 export function signOut() {
     return firebaseAuth.signOut()
 }

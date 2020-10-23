@@ -5,10 +5,9 @@ import { compose } from 'redux';
 import {AppDrawer} from "components/Drawer/AppDrawer";
 
 import {addListRequest} from "store/features/lists/thunks";
-
-import {TListState} from "../store/features/lists/types";
+import {TListState} from "store/features/lists/types";
 import {TAppState} from "store/features/app/types";
-import {TTodosState} from "../store/features/todos/types";
+import {TTodosState} from "store/features/todos/types";
 
 interface TMapState {
     lists: TListState
@@ -27,6 +26,6 @@ const mapDispatchProps = {
     requestAddList: addListRequest
 };
 
-export const connectorAppDrawer = connect(mapStateToProps, mapDispatchProps)
 
+export const connectorAppDrawer = connect(mapStateToProps, mapDispatchProps)
 export const AppDrawerContainer: any = compose(withRouter, connectorAppDrawer)(AppDrawer)

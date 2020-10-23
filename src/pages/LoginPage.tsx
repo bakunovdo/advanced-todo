@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Button, Col, Form, Input, Row, Typography} from "antd";
+import {Alert, Button, Col, Form, Input, Row, Typography} from "antd";
 
 import {LockOutlined, UserOutlined} from "@ant-design/icons/lib";
 import {ConnectedProps} from "react-redux";
@@ -14,8 +14,11 @@ type TProps = { isAuth: boolean | null }
     & RouteComponentProps<any>
 
 export const LoginPage: React.FC<TProps> = (props) => {
+    const [error, setError] = React.useState("")
+
     const onFinish = async (values: any) => {
         const result = await props.authUser(values.email, values.password)
+        setError(result?.message)
     };
 
     if (props.isAuth) return <Redirect to="/"/>
@@ -55,6 +58,9 @@ export const LoginPage: React.FC<TProps> = (props) => {
                                 placeholder="Password"
                                 autoComplete="true"
                             />
+                        </Form.Item>
+                        <Form.Item>
+                            {error && <Alert type="error" message={error}/>}
                         </Form.Item>
                         <Form.Item style={{textAlign: "center"}}>
                             <Button type="primary" htmlType="submit" className="login-form-button">

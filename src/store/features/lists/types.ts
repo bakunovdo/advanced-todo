@@ -43,7 +43,7 @@ interface renameListAction {
 
 
 export type listsActionTypes = setListsAction
-    | addListAction
-    | deleteListAction
-    | renameListAction
-    | moveListAction
+    & addListAction
+    & deleteListAction
+    & renameListAction
+    & moveListAction

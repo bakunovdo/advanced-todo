@@ -4,7 +4,7 @@ import classNames from "classnames"
 import {NavLink} from 'react-router-dom'
 import {ConnectedProps} from "react-redux";
 
-import {CalendarOutlined, HomeOutlined, MenuOutlined, StarOutlined,} from '@ant-design/icons';
+import {HomeOutlined, MenuOutlined, StarOutlined,} from '@ant-design/icons';
 
 
 import {connectorAppDrawer} from "containers/AppDrawerContainer";
