@@ -2,7 +2,7 @@ import {connect} from 'react-redux';
 
 import {Header} from "components/Header/Header";
 import {signOut} from "store/features/app/thunks";
-import {RootState} from "../store";
+import {RootState} from "store";
 
 
 const mapStateToProps = (state: RootState) => ({

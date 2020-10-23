@@ -1,9 +1,9 @@
 import {todosActionTypes, todoTypes, TTodosState} from "./types";
+import {TTodo} from "../../../types";
 
 const initialState: TTodosState = {
     items: [],
     selectedTodo: null,
-    isLoading: false
 }
 
 export const todosReducer = (state = initialState, action: todosActionTypes) => {
@@ -12,12 +12,6 @@ export const todosReducer = (state = initialState, action: todosActionTypes) => 
             return {
                 ...state,
                 items: action.payload
-            }
-        }
-        case todoTypes.SET_LOADING: {
-            return {
-                ...state,
-                isLoading: action.payload
             }
         }
         case todoTypes.ADD_TODO: {
@@ -63,10 +57,9 @@ export const todosReducer = (state = initialState, action: todosActionTypes) => 
         }
         case todoTypes.UPDATE_TODO: {
             const newItems = state.items.map((todo) => {
-                // @ts-ignore
                 if (todo.id === action.payload.id) {
-                    // @ts-ignore
-                    return {...todo, ...action.payload}
+
+                    return {...todo, ...action.payload as TTodo}
                 } else return todo
             })
             return {
@@ -75,10 +68,9 @@ export const todosReducer = (state = initialState, action: todosActionTypes) => 
             }
         }
         case todoTypes.ADD_STEP: {
-            // @ts-ignore
             const {step, todoId} = action.payload
             const [...todos] = state.items
-            let newSelTodo
+            let newSelTodo = state.selectedTodo
 
             const newTodos = todos.map((todo) => {
                 if (todo.id === todoId) {
@@ -98,10 +90,9 @@ export const todosReducer = (state = initialState, action: todosActionTypes) => 
             }
         }
         case todoTypes.UPDATE_STEPS: {
-            // @ts-ignore
             const {todoId, newSteps} = action.payload
             const [...todos] = state.items
-            let newSelTodo
+            let newSelTodo = state.selectedTodo
             const newTodos = todos.map((todo) => {
                 if (todo.id === todoId) {
                     todo.steps = newSteps
@@ -118,7 +109,6 @@ export const todosReducer = (state = initialState, action: todosActionTypes) => 
         }
 
         case todoTypes.MOVE_TODO: {
-            // @ts-ignore
             const {listId, todoId} = action.payload
             const [...todos] = state.items
 
@@ -133,7 +123,6 @@ export const todosReducer = (state = initialState, action: todosActionTypes) => 
                 items: newTodos
             }
         }
-
         default:
             return state
     }

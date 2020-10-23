@@ -1,14 +1,12 @@
-import {TList, TTodo} from "types"
+import {TList, TStep, TTodo} from "types"
 
-export type TTodosState = {
+export interface TTodosState {
     items: TTodo[],
     selectedTodo: TTodo | null,
-    isLoading: boolean
 }
 
 export const todoTypes = {
     SET_TODOS: "@@todo/SET_TODOS",
-    SET_LOADING: "@@todo/SET_LOADING",
     DELETE_TODO: "@@todo/DELETE_TODO",
     ADD_TODO: "@@todo/ADD_TODO",
     TOGGLE_TODO: "@@todo/TOGGLE_TODO",
@@ -17,19 +15,15 @@ export const todoTypes = {
     CLEAR_SELECT: "@@todo/CLEAR_SELECT",
     UPDATE_TODO: "@@todo/UPDATE_TODO",
     MOVE_TODO: "@@todo/MOVE_TODO",
-    //STEP
     ADD_STEP: "@@todo/ADD_STEP",
+    DELETE_STEP: "@@todo/DELETE_STEP",
+    TOGGLE_STEP: "@@todo/TOGGLE_STEP",
     UPDATE_STEPS: "@@todo/UPDATE_STEPS"
 }
 
 interface setTodosAction {
     type: typeof todoTypes.SET_TODOS
     payload: TList[]
-}
-
-interface setLoadingAction {
-    type: typeof todoTypes.SET_LOADING
-    payload: boolean
 }
 
 interface deleteTodoAction {
@@ -48,7 +42,7 @@ interface toggleTodoAction {
 }
 
 interface toggleImportantAction {
-    type: typeof todoTypes.TOGGLE_TODO
+    type: typeof todoTypes.TOGGLE_IMPORTANT
     payload: TTodo
 }
 
@@ -59,7 +53,6 @@ interface selectTodoAction {
 
 interface clearSelectAction {
     type: typeof todoTypes.CLEAR_SELECT
-    payload: null
 }
 
 interface updateTodoAction {
@@ -76,23 +69,23 @@ interface moveTodoAction {
 }
 
 interface addStepAction {
-    type: typeof todoTypes.ADD_TODO
+    type: typeof todoTypes.ADD_STEP
     payload: {
         todoId: string,
-        title: string
+        step: TStep
     }
 }
 
 interface deleteStepAction {
-    type: typeof todoTypes.DELETE_TODO
+    type: typeof todoTypes.DELETE_STEP
     payload: {
         todoId: string,
-        stepId: string
+        newSteps: TStep[]
     }
 }
 
 interface toggleStepAction {
-    type: typeof todoTypes.TOGGLE_TODO
+    type: typeof todoTypes.TOGGLE_STEP
     payload: {
         todoId: string,
         stepId: string
@@ -101,16 +94,15 @@ interface toggleStepAction {
 
 
 export type todosActionTypes =
-    | setTodosAction
-    | setLoadingAction
-    | deleteTodoAction
-    | addTodoAction
-    | toggleTodoAction
-    | selectTodoAction
-    | toggleImportantAction
-    | updateTodoAction
-    | clearSelectAction
-    | addStepAction
-    | deleteStepAction
-    | moveTodoAction
-    | toggleStepAction
+    & setTodosAction
+    & deleteTodoAction
+    & addTodoAction
+    & toggleTodoAction
+    & selectTodoAction
+    & toggleImportantAction
+    & updateTodoAction
+    & clearSelectAction
+    & addStepAction
+    & deleteStepAction
+    & moveTodoAction
+    & toggleStepAction

@@ -1,8 +1,8 @@
 import {firestore} from "../database";
 
 import {mapDoc, mapSnapshot, onError} from "./helpers";
-import {TFromApi, TFromUpdateTodo} from "./types";
-import {TList, TTodo} from "../types";
+import {TFromApi} from "./types";
+import {TList} from "../types";
 
 
 export function getLists(userId: string): Promise<TFromApi> {

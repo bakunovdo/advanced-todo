@@ -31,7 +31,7 @@ export const TodoListHeader: React.FC<Props> = ({listId, listTitle, deleteList, 
     const confirmTitle = async () => {
         if (listTitle !== newListValue && newListValue && listId) {
             const res = await renameList(listId, newListValue)
-            if(!res) message.error("Rename list fail")
+            if (!res) message.error("Rename list fail")
         }
 
         setEditMode(false)

@@ -7,11 +7,12 @@ import {App} from "components/App/App";
 import {setUserData} from "store/features/app/thunks";
 import {getTodosRequest} from "store/features/todos/thunks";
 import {getListsRequest} from "store/features/lists/thunks";
+import {setAppInitialize} from "store/features/app/actions";
 
 import {RootState} from "store";
-import {setAppInitialize} from "../store/features/app/actions";
 
 type TAppProps = ConnectedProps<typeof connectorApp>
+
 
 class AppCont extends React.Component<TAppProps, {}> {
     async componentDidMount() {
@@ -30,8 +31,6 @@ class AppCont extends React.Component<TAppProps, {}> {
             await this.props.setAppInitialize(true)
         });
     }
-
-
 
     render() {
         if (!firestore || !this.props.appInitialize) return null
@@ -55,6 +54,4 @@ const mapDispatchProps = {
 
 
 const connectorApp = connect(mapStateToProps, mapDispatchProps)
-
-
 export const AppContainer = connectorApp(AppCont)

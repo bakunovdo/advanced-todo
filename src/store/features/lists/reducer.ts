@@ -23,9 +23,8 @@ export const listsReducer = (state = initialState, action: listsActionTypes) => 
             }
         }
         case listsTypes.RENAME_LIST: {
-            // @ts-ignore
             const {id, title} = action.payload
-            
+
             return {
                 ...state,
                 items: state.items.map((list)=> list.id === id ? {...list, title} : list)

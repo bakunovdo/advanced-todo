@@ -2,8 +2,7 @@ import {connect} from 'react-redux';
 
 import {LoginPage} from "pages/LoginPage";
 import {loginUserEmailAndPassword} from "store/features/app/thunks";
-import {RootState} from "../store";
-
+import {RootState} from "store";
 
 
 const mapStateToProps = (state: RootState) => ({

@@ -1,8 +1,9 @@
 import {connect} from 'react-redux';
 
-import {SignUpPage} from "../pages/SignUpPage";
+import {SignUpPage} from "pages/SignUpPage";
 import {signInWithUserEmailAndPassword} from "store/features/app/thunks";
-import {RootState} from "../store";
+import {RootState} from "store";
+
 
 const mapStateToProps = (state: RootState) => ({
     isAuth: state.app.isAuth

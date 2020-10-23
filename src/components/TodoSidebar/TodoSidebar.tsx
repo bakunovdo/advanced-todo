@@ -3,12 +3,12 @@ import classNames from "classnames";
 
 import {ConnectedProps} from "react-redux";
 
-import {DeleteOutlined, MenuUnfoldOutlined} from "@ant-design/icons/lib";
-import {Input, Tooltip, Typography} from "antd";
+import {Input, Typography} from "antd";
 
-import {SButton, SSidebarContent, SSidebarFooter, STodoSidebar, STodoSteps} from "./styled";
+import {SSidebarContent, STodoSidebar} from "./styled";
 import {connectorTodoSidebar} from "containers/TodoSidebarContainer";
-import {StepItem} from "./StepItem";
+import {SidebarFooter} from "./Footer";
+import {TodoSteps} from "./TodoSteps";
 
 type FromParentProps = {
     closeHandler: () => void
@@ -20,16 +20,14 @@ type Props = FromParentProps & ConnectedProps<typeof connectorTodoSidebar>
 export const TodoSidebar: React.FC<Props> = (props) => {
     const {
         updateTodoRequest,
-        deleteStepRequest,
         addStepRequest,
-        toggleStepRequest,
         selectedTodo,
-        clearSelectTodo
+        deleteStepRequest,
+        toggleStepRequest
     } = props
 
     const [title, setTitle] = useState("")
     const [note, setNote] = useState("")
-
     const [step, setStep] = useState("")
 
     useEffect(() => {
@@ -40,20 +38,19 @@ export const TodoSidebar: React.FC<Props> = (props) => {
         }
     }, [selectedTodo])
 
-
     const updateTodo = () => {
         const updateData = {title, note}
-
-        if (title && (updateData.title !== selectedTodo?.title) || (updateData.note !== selectedTodo?.note)) {
+        if (
+            (updateData.title !== selectedTodo?.title) ||
+            (updateData.note !== selectedTodo?.note)
+        ) {
             updateTodoRequest(selectedTodo?.id, updateData)
         }
-
     }
 
     useEffect(() => {
         if (selectedTodo && note === "") updateTodo()
     }, [note])
-
 
     const newStepHandler = () => {
         if (selectedTodo && step) {
@@ -64,13 +61,6 @@ export const TodoSidebar: React.FC<Props> = (props) => {
     const sidebarClass = classNames({
         hideSidebar: !props.showSidebar
     })
-
-    const closeSidebar = () => {
-        props.closeHandler()
-        setTimeout(() => {
-            clearSelectTodo()
-        }, 200)
-    }
 
     return (
         <STodoSidebar className={sidebarClass}>
@@ -83,6 +73,7 @@ export const TodoSidebar: React.FC<Props> = (props) => {
                         onPressEnter={updateTodo}
                     />
                 </div>
+
                 <div className="section">
                     <Typography.Title level={5}>Steps</Typography.Title>
                     <Input
@@ -92,37 +83,23 @@ export const TodoSidebar: React.FC<Props> = (props) => {
                         onPressEnter={newStepHandler}
                     />
                 </div>
-                {
-                    selectedTodo?.steps && selectedTodo.steps.length > 0 && (
-                        <div className="section">
-                            <STodoSteps>
-                                {
-                                    selectedTodo.steps
-                                        .map((step) =>
-                                            <StepItem
-                                                key={step.id}
-                                                id={step.id}
-                                                title={step.title}
-                                                completed={step.completed}
 
-                                                toggleStep={() => toggleStepRequest(selectedTodo, step.id)}
-                                                deleteStep={() => deleteStepRequest(selectedTodo, step.id)}
-                                            />)
-                                }
-                            </STodoSteps>
-                        </div>
-                    )
-                }
+                {selectedTodo?.steps && selectedTodo.steps.length > 0 && (
+                    <div className="section">
+                        <TodoSteps
+                            selectedTodo={selectedTodo}
+                            deleteStepRequest={deleteStepRequest}
+                            toggleStepRequest={toggleStepRequest}
+                        />
+                    </div>)}
 
                 <div className="section description">
                     <div className="header">
                         <Typography.Title level={5}>
                             Note
                         </Typography.Title>
-
                         {note && <span onClick={() => setNote("")}>Clear</span>}
                     </div>
-
                     <Input.TextArea
                         value={note}
                         autoSize={{minRows: 5, maxRows: 5}}
@@ -132,20 +109,7 @@ export const TodoSidebar: React.FC<Props> = (props) => {
                     />
                 </div>
             </SSidebarContent>
-            <SSidebarFooter>
-                <Tooltip title="Hide detailed view" mouseLeaveDelay={0} color={"white"}>
-                    <SButton onClick={closeSidebar}>
-                        <MenuUnfoldOutlined/>
-                    </SButton>
-                </Tooltip>
-
-                <Tooltip title="Delete task" mouseLeaveDelay={0} color={"white"} placement="topRight">
-                    <SButton>
-                        <DeleteOutlined/>
-                    </SButton>
-                </Tooltip>
-            </SSidebarFooter>
+            <SidebarFooter closeHandler={props.closeHandler}/>
         </STodoSidebar>
     )
-        ;
 }

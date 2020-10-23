@@ -6,7 +6,6 @@ import {Input} from "antd";
 import {SMenuAddList} from "./styled";
 import classNames from "classnames";
 
-
 type Props = {
     inputHover: any,
     isAddListVisible: boolean,
@@ -17,6 +16,7 @@ type Props = {
     userId: string | undefined
 
 }
+
 
 export const MenuAddList: React.FC<Props> = (props) => {
     const {inputHover, isCollapsed, setCollapsed, setAddListVisible, userId, isAddListVisible, requestAddList} = props
